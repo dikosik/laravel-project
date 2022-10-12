@@ -125,6 +125,11 @@
             @csrf
             Hotel name:<input type="text" name="title">
             Stars: <textarea name="content"cols="30" rows="1"></textarea>
+            <select name="category_id">
+                @foreach($cats as $cat)
+                    <option value="{{$cat->id}}">{{$cat->name}}</option>
+                @endforeach
+            </select>
             <button type="submit">Create</button>
         </form>
         <h6 style="color: white">ASDFGHJKL</h6>

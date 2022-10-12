@@ -214,9 +214,21 @@
                     <div class="col-md-7">
                         <h2 class="featurette-heading fw-normal lh-1">Hotels <span class="text-muted"></span></h2>
                         <p class="lead">901905 hotels</p>
-                        <a href="{{ route('posts.create') }}"class="btn btn-primary">Go to add new hotel</a>
+                       @auth
+                        <div> {{Auth::user()->name}}</div>
+                        <form action="{{route('logout')}}" method="post">
+                            <button type="submit">log out</button>
+                        </form>
+                        @endauth
+                        @guest
+                            <a href="{{route('login')}}">Log in</a>
+                        @endguest
+                        <a href="{{ route('posts.create') }}" class="btn btn-primary">Go to add new hotel</a>
 
                     </div>
+                    @foreach($cats as $cat)
+                        <a href="{{route('postsByCat', $cat->id )}}">{{$cat->name}}</a>
+                    @endforeach
                     @foreach($myposts as $post)
                         <a href="{{route('posts.show', $post->id)}}" ><h3>{{$post->title}}</h3></a>
                         <p> {{$post->content}}</p>

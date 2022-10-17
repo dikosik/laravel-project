@@ -131,6 +131,7 @@
                     <div>
                         <h3>{{$post->title}}   </h3>
                         <p>{{$post->content}} </p>
+                        <img src="/storage/{{$post->image}}" alt="image" style="width: 400px">
                         <a href="{{route('posts.edit', $post->id)}}" class="btn btn-primary">Edit</a>
                     </div>
 

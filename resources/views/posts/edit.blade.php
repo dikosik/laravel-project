@@ -134,8 +134,9 @@
                     <form action="{{route('posts.update', $post->id)}}" method="post">
                         @csrf
                         @method('PUT')
-                        Hotel name: <input type ="text" name="title" value="{{$post->title}}"> <br>
+                        name: <input type ="text" name="title" value="{{$post->title}}"> <br>
                         Stars: <textarea name="content" cols="30" rows="1">{{$post->content}}</textarea>
+
                         <select name="category_id">
                             @foreach($cats as $cat)
                                 <option value="{{$cat->id}}" @if($cat->id == $post ->category_id) selected @endif>{{$cat->name}}</option>

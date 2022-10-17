@@ -104,12 +104,23 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sign in</a>
+                        @auth
+                            <b> {{Auth::user()->name}}</b>
+                            @guest
+                        <a class="nav-link" href="{{route('login')}}">log in
+                            @endguest
+
+                        </a>
+                            @endauth
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">Sign up</a>
+                        <form action="{{route('logout')}}" method="post">
+                            @csrf
+                            <button type="submit">log out</button>
+                        </form>
                     </li>
                 </ul>
+
                 <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
@@ -129,8 +140,8 @@
         </div>
         <div class="carousel-inner" >
             <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="2000px" height="500px" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
+                <img src="https://static.arocdn.com/Sites/50/imperialhotels2022/uploads/images/FullLengthImages/Large/R.N_Twin_2_3.jpg"
+                     width="2000px" height="500px" >
                 <div class="container">
                     <div class="carousel-caption text-start">
                         <h1>Find accommodation for a new trip</h1>
@@ -138,7 +149,8 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="2000px" height="500px"  xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+                <img src=" https://q-xx.bstatic.com/xdata/images/hotel/840x460/395349908.jpg?k=b07146dbfdfca4816c88851ff8c8bd620596b2d1dd544da48019901355b0da4f&o="
+                     width="2000px" height="500px" >
 
                 <div class="container">
                     <div class="carousel-caption">
@@ -147,7 +159,8 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="2000px" height="500px"  xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+                <img src="https://cache.marriott.com/content/dam/marriott-renditions/SANCM/sancm-one-living-1705-hor-wide.jpg?output-quality=70&interpolation=progressive-bilinear&downsize=1336px:*"
+                     width="2000px" height="500px" >
 
                 <div class="container">
                     <div class="carousel-caption text-end">
@@ -178,96 +191,91 @@
 
         <!-- Three columns of text below the carousel -->
         <div class="row">
+            @foreach($cats as $cat)
             <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                <img src="https://www.contemporist.com/wp-content/uploads/2016/12/wrap-around-headboard-131216-1027-01-800x527.jpg"
+                     width="170px" height="140px" >
 
-                <h2 class="fw-normal">Astana</h2>
+                <h2 class="fw-normal">
+                        <a href="{{route('postsByCat', $cat->id )}}">{{$cat->name}}</a>
+                    </h2>
                 <p>903 accommodation options</p>
 
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                <p> <a href="{{ route('posts.create') }}" class="btn btn-primary">add new place</a></p>
+            </div>
+            @endforeach<!-- /.col-lg-4 -->
 
-                <h2 class="fw-normal">Almaty</h2>
-                <p>1309 accommodation options</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
-                <h2 class="fw-normal">Shymkent</h2>
-                <p>285 accommodation options</p>
-                <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
 
 
         <!-- START THE FEATURETTES -->
+                <hr class="featurette-divider">
 
-        <hr class="featurette-divider">
+                <div class="row featurette">
+                    <div class="col-md-7 order-md-2">
+                        <h2 class="featurette-heading fw-normal lh-1">Apartments<span class="text-muted"></span></h2>
+                        <p class="lead">888332 apartments</p>
+                        @foreach($myapartments as $apartment)
+                            <a href="{{route('apartments.show', $apartment->id)}}" ><h3>{{$apartment->title}}</h3></a>
+                            <p> {{$apartment->content}}</p>
 
-        <div class="row featurette">
 
-            <div class="card">
-                <div class="card-body">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading fw-normal lh-1">Hotels <span class="text-muted"></span></h2>
-                        <p class="lead">901905 hotels</p>
-                       @auth
-                        <div> {{Auth::user()->name}}</div>
-                        <form action="{{route('logout')}}" method="post">
-                            <button type="submit">log out</button>
-                        </form>
-                        @endauth
-                        @guest
-                            <a href="{{route('login')}}">Log in</a>
-                        @endguest
-                        <a href="{{ route('posts.create') }}" class="btn btn-primary">Go to add new hotel</a>
+                        @endforeach
+                    </div>
+                    <h6 style="color: white">ASDFGHJKL</h6>
+
+                    <div class="col-md-5 order-md-1">
+                        <img src="https://i.pinimg.com/564x/27/bf/8a/27bf8afc4cdea33528e66f1af3f3a4f1.jpg"
+                             width="500px" height="500px" >
 
                     </div>
-                    @foreach($cats as $cat)
-                        <a href="{{route('postsByCat', $cat->id )}}">{{$cat->name}}</a>
-                    @endforeach
-                    @foreach($myposts as $post)
-                        <a href="{{route('posts.show', $post->id)}}" ><h3>{{$post->title}}</h3></a>
-                        <p> {{$post->content}}</p>
-
-
-                    @endforeach
                 </div>
-            </div>
+
+                        <hr class="featurette-divider">
+                <div class="row featurette">
+                    <div class="col-md-7">
+                        <h2 class="featurette-heading fw-normal lh-1">
+                            Hotels<span class="text-muted"></span></h2>
+                        <p class="lead">456 987 hotels</p>
+                        @foreach($myposts as $post)
+                            <a href="{{route('posts.show', $post->id)}}" ><h3>{{$post->title}}</h3></a>
+                            <p> {{$post->content}}</p>
+                        @endforeach
+                    </div>
+                    <div class="col-md-5">
+                        <img src="https://cdn.marriottnetwork.com/uploads/sites/22/2019/10/the-mayflower-hotel-one-bedroom-suite-788x664.jpg"
+                             width="500px" height="500px" >
+
+                    </div>
+                </div>
+
+{{--                       @auth--}}
+{{--                        <div> {{Auth::user()->name}}</div>--}}
+{{--                        <form action="{{route('logout')}}" method="post">--}}
+{{--                            <button type="submit">log out</button>--}}
+{{--                        </form>--}}
+{{--                        @endauth--}}
+{{--                        @guest--}}
+{{--                            <a href="{{route('login')}}">Log in</a>--}}
+{{--                        @endguest--}}
 
 
-            </div>
+
+{{--                </div>--}}
+{{--            </div>--}}
+    <hr class="featurette-divider">
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1">
+                Villas<span class="text-muted"></span></h2>
+            <p class="lead">487 962 villas</p>
         </div>
+        <div class="col-md-5">
+            <img src="https://blog.tiket.com/wp-content/uploads/2021/12/3.-Yucca-Villas.jpg"
+                 width="500px" height="500px" >
 
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading fw-normal lh-1">Apartments<span class="text-muted"></span></h2>
-                <p class="lead">888332 apartments</p>
-            </div>
-            <div class="col-md-5 order-md-1">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
-
-            </div>
         </div>
+    </div>
 
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading fw-normal lh-1">
-                    Villas<span class="text-muted"></span></h2>
-                <p class="lead">472486 villas</p>
-            </div>
-            <div class="col-md-5">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
-
-            </div>
-        </div>
 
         <hr class="featurette-divider">
 

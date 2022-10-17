@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Apartment;
 use App\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -11,17 +12,19 @@ use App\Models\Post;
 
 class PostController extends Controller{
 
-    public function postsByCategory(Category $category){
+    public function postByCategory(Category $category){
         $cats = Category:: all();
         $posts = $category->posts;
-        return view('posts.index', ['myposts'=>$posts, 'cats'=>$cats]);
+        $myapartments = Apartment::all();
+        return view('posts.index', ['myposts'=>$posts, 'cats'=>$cats, 'myapartments' => $myapartments]);
     }
 
     public function index(){
-     $allposts = Post::all();
+     $allposts = Post::where('category_id', 1)->get();
      $cats = Category:: all();
+     $myapartments = Post::where('category_id', 5)->get();
 
-        return view('posts.index', ['myposts'=>$allposts, 'cats'=>$cats]);
+        return view('posts.index', ['myposts'=>$allposts, 'cats'=>$cats, 'myapartments' => $myapartments]);
     }
 
 
@@ -33,10 +36,15 @@ class PostController extends Controller{
 
 
     public function store(Request $request){
+        $url = '';
+        if ($request->hasFile('image')) {
+            $url = $request->file('image')->store('images');
+        }
     Post::create([
         'title'=>$request->title,
         'content'=>$request->content,
-        'category_id'=>$request->category_id
+        'category_id'=>$request->category_id,
+        'image' => $url
 
     ]);
     return redirect()->route('posts.index');
@@ -61,6 +69,9 @@ class PostController extends Controller{
             'category_id'=>$request->category_id
         ]);
         return redirect()->route('posts.index');
+
+
+
     }
 
     public function destroy(Post $post){

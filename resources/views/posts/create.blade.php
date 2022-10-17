@@ -121,15 +121,16 @@
 
 <div class="card">
     <div class="card-body">
-        <form action="{{route('posts.store')}}" method="POST">
+        <form action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            Hotel name:<input type="text" name="title">
+            name:<input type="text" name="title">
             Stars: <textarea name="content"cols="30" rows="1"></textarea>
             <select name="category_id">
                 @foreach($cats as $cat)
                     <option value="{{$cat->id}}">{{$cat->name}}</option>
                 @endforeach
             </select>
+            <input type="file" name="image">
             <button type="submit">Create</button>
         </form>
         <h6 style="color: white">ASDFGHJKL</h6>

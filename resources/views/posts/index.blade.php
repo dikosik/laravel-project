@@ -116,7 +116,7 @@
                     <li class="nav-item">
                         <form action="{{route('logout')}}" method="post">
                             @csrf
-                            <button type="submit">log out</button>
+                            <a class="nav-link active" aria-current="page" href="">log out</a>
                         </form>
                     </li>
                 </ul>
@@ -248,20 +248,20 @@
                     </div>
                 </div>
 
-{{--                       @auth--}}
-{{--                        <div> {{Auth::user()->name}}</div>--}}
-{{--                        <form action="{{route('logout')}}" method="post">--}}
-{{--                            <button type="submit">log out</button>--}}
-{{--                        </form>--}}
-{{--                        @endauth--}}
-{{--                        @guest--}}
-{{--                            <a href="{{route('login')}}">Log in</a>--}}
-{{--                        @endguest--}}
+                       @auth
+                        <div> {{Auth::user()->name}}</div>
+                        <form action="{{route('logout')}}" method="post">
+                            <button type="submit">log out</button>
+                        </form>
+                        @endauth
+                        @guest
+                            <a href="{{route('login')}}">Log in</a>
+                        @endguest
 
 
 
-{{--                </div>--}}
-{{--            </div>--}}
+                </div>
+            </div>
     <hr class="featurette-divider">
     <div class="row featurette">
         <div class="col-md-7 order-md-2">
@@ -317,8 +317,8 @@
 
 {{--@endforeach--}}
 
-{{--</body>--}}
-{{--</html>--}}
+</body>
+</html>
 
 
 
